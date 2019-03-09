@@ -9,11 +9,11 @@
 import SpriteKit
 import GameplayKit
 
-var score = 0
+var height = 0
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     let madden = SKSpriteNode(imageNamed: "Madden_Glasses_1")
-    let scoreLabel = SKLabelNode()
+    let heightLabel = SKLabelNode()
     
     let gameArea: CGRect
     
@@ -45,11 +45,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
-        score = 0
+        height = 0
         
         self.physicsWorld.contactDelegate = self
         
-        let background = SKSpriteNode(imageNamed: "space")
+        let background = SKSpriteNode(imageNamed: "cs")
         background.size = self.size
         background.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         background.zPosition = 0
@@ -66,20 +66,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         madden.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy
         self.addChild(madden)
         
-        scoreLabel.text = "Score: 0"
-        scoreLabel.fontSize = 30
-        scoreLabel.fontColor = SKColor.white
-        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        scoreLabel.position = CGPoint(x: self.size.width * 0.1, y: self.size.height * 0.9)
-        scoreLabel.zPosition = 100
-        self.addChild(scoreLabel)
+        heightLabel.text = "Height: 0"
+        heightLabel.fontSize = 30
+        heightLabel.fontColor = SKColor.white
+        heightLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        heightLabel.position = CGPoint(x: self.size.width * 0.1, y: self.size.height * 0.9)
+        heightLabel.zPosition = 100
+        self.addChild(heightLabel)
         
         start()
     }
     
-    func increaseScore(){
-        score += 1
-        scoreLabel.text = "Score: \(score)"
+    func increaseHeight(){
+        height += 1
+        heightLabel.text = "Height: \(height)"
     }
     
     func goToGameScene(){
@@ -114,7 +114,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 explode(spawnPosition: num2.node!.position)
                 num1.node?.removeFromParent()
                 num2.node?.removeFromParent()
-                increaseScore()
             }
         }
     }
