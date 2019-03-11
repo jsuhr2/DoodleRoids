@@ -29,6 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let Madden : UInt32 = 0b1 //1
         static let Blast : UInt32 = 0b10 //2
         static let Enemy : UInt32 = 0b100 //3
+        static let Platform: UInt32 = 0b1000
     }
     
     override init(size: CGSize){
@@ -134,11 +135,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func start(){
+        /*
         let spawn = SKAction.run(spawnEnemy)
         let wait = SKAction.wait(forDuration: 1)
         let spawnSequence = SKAction.sequence([wait, spawn])
         let spawnContinuous = SKAction.repeatForever(spawnSequence)
         self.run(spawnContinuous)
+        */
     }
     
     func end(){
