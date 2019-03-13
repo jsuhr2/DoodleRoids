@@ -56,23 +56,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         background.zPosition = 0
         self.addChild(background)
         
-        backgroundColor = SKColor.white
         madden.setScale(2)
         madden.position = CGPoint(x: self.size.width/2, y: self.size.height/5)
-        madden.zPosition = 2
+        madden.zPosition = 1
         madden.physicsBody = SKPhysicsBody(rectangleOf: madden.size)
-        madden.physicsBody!.affectedByGravity = false
         madden.physicsBody!.categoryBitMask = PhysicsCategories.Madden
         madden.physicsBody!.collisionBitMask = PhysicsCategories.None
         madden.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy
         self.addChild(madden)
         
-        scoreLabel.text = "Score: 0"
+        scoreLabel.text = "Score: \(score)"
         scoreLabel.fontSize = 30
         scoreLabel.fontColor = SKColor.white
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         scoreLabel.position = CGPoint(x: self.size.width * 0.1, y: self.size.height * 0.9)
-        scoreLabel.zPosition = 100
+        scoreLabel.zPosition = 2
         self.addChild(scoreLabel)
         
         start()
@@ -93,6 +91,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         var num1 = SKPhysicsBody()
         var num2 = SKPhysicsBody()
+        if(madden.position.y == 0 + madden.size.height/2){
+            // move up 20
+            let jumpUpAction = SKAction.moveBy(x: 0, y:20, duration:0.2)
+            // move down 20
+            let jumpDownAction = SKAction.moveBy(x: 0, y:-20, duration:0.2)
+            // sequence of move yup then down
+            let jumpSequence = SKAction.sequence([jumpUpAction, jumpDownAction])
+            // make player run sequence
+            madden.run(jumpSequence)
+        }
         if(contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask){
             num1 = contact.bodyA
             num2 = contact.bodyB
