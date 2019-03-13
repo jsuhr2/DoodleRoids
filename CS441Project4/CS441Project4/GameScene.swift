@@ -9,11 +9,11 @@
 import SpriteKit
 import GameplayKit
 
-var height = 0
+var score = 0
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     let madden = SKSpriteNode(imageNamed: "Madden_Glasses_1")
-    let heightLabel = SKLabelNode()
+    let scoreLabel = SKLabelNode()
     
     let gameArea: CGRect
     
@@ -46,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
-        height = 0
+        score = 0
         
         self.physicsWorld.contactDelegate = self
         
@@ -67,20 +67,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         madden.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy
         self.addChild(madden)
         
-        heightLabel.text = "Height: 0"
-        heightLabel.fontSize = 30
-        heightLabel.fontColor = SKColor.white
-        heightLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        heightLabel.position = CGPoint(x: self.size.width * 0.1, y: self.size.height * 0.9)
-        heightLabel.zPosition = 100
-        self.addChild(heightLabel)
+        scoreLabel.text = "Score: 0"
+        scoreLabel.fontSize = 30
+        scoreLabel.fontColor = SKColor.white
+        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        scoreLabel.position = CGPoint(x: self.size.width * 0.1, y: self.size.height * 0.9)
+        scoreLabel.zPosition = 100
+        self.addChild(scoreLabel)
         
         start()
     }
     
-    func increaseHeight(){
-        height += 1
-        heightLabel.text = "Height: \(height)"
+    func increaseScore(){
+        score += 1
+        scoreLabel.text = "Score: \(score)"
     }
     
     func goToGameScene(){
@@ -115,6 +115,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 explode(spawnPosition: num2.node!.position)
                 num1.node?.removeFromParent()
                 num2.node?.removeFromParent()
+                increaseScore()
             }
         }
     }
