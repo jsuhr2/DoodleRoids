@@ -32,16 +32,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let Platform: UInt32 = 0b1000
     }
     
+    func randomPoint(scene: CGRect) -> CGPoint {
+        let x = CGFloat(arc4random_uniform(UInt32(scene.width)))
+        let y = CGFloat(arc4random_uniform(UInt32(scene.height)))
+        return CGPoint(x: x, y: y)
+    }
+    
     override init(size: CGSize){
         let maxAspectRatio: CGFloat = 16.0/9.0
         let playableWidth = size.height/maxAspectRatio
         let margin = (size.width - playableWidth)/2
         gameArea = CGRect(x: margin, y: 0, width: playableWidth, height: size.height)
         super.init(size: size)
+        spawnBarRandom()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func spawnBarRandom(){
+
+    }
+    
+    func spawnBarTop(){
+        
     }
     
     override func didMove(to view: SKView) {
@@ -58,11 +73,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         madden.setScale(2)
         madden.position = CGPoint(x: self.size.width/2, y: self.size.height/5)
-        madden.zPosition = 1
+        madden.zPosition = 2
         madden.physicsBody = SKPhysicsBody(rectangleOf: madden.size)
         madden.physicsBody!.categoryBitMask = PhysicsCategories.Madden
         madden.physicsBody!.collisionBitMask = PhysicsCategories.None
         madden.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy
+        madden.physicsBody!.contactTestBitMask = PhysicsCategories.Platform
         self.addChild(madden)
         
         scoreLabel.text = "Score: \(score)"
@@ -70,10 +86,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.fontColor = SKColor.white
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         scoreLabel.position = CGPoint(x: self.size.width * 0.1, y: self.size.height * 0.9)
-        scoreLabel.zPosition = 2
+        scoreLabel.zPosition = 3
         self.addChild(scoreLabel)
         
+        let plat = SKSpriteNode(imageNamed: "platform")
+        plat.setScale(2)
+        madden.position = CGPoint(x: self.size.width/2, y: 0)
+        plat.zPosition = 1
+        plat.physicsBody = SKPhysicsBody(rectangleOf: plat.size)
+        plat.physicsBody!.categoryBitMask = PhysicsCategories.Platform
+        plat.physicsBody!.collisionBitMask = PhysicsCategories.None
+        plat.physicsBody!.contactTestBitMask = PhysicsCategories.Madden
+        self.addChild(plat)
+        
         start()
+        /*
+        while(true){
+            if(madden.position.y == 0 + madden.size.height/2){
+                // move up 20
+                let jumpUpAction = SKAction.moveBy(x: 0, y:20, duration:0.2)
+                // move down 20
+                let jumpDownAction = SKAction.moveBy(x: 0, y:-20, duration:0.2)
+                // sequence of move yup then down
+                let jumpSequence = SKAction.sequence([jumpUpAction, jumpDownAction])
+                // make player run sequence
+                madden.run(jumpSequence)
+            }
+        }
+        */
     }
     
     func increaseScore(){
@@ -91,16 +131,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         var num1 = SKPhysicsBody()
         var num2 = SKPhysicsBody()
-        if(madden.position.y == 0 + madden.size.height/2){
-            // move up 20
-            let jumpUpAction = SKAction.moveBy(x: 0, y:20, duration:0.2)
-            // move down 20
-            let jumpDownAction = SKAction.moveBy(x: 0, y:-20, duration:0.2)
-            // sequence of move yup then down
-            let jumpSequence = SKAction.sequence([jumpUpAction, jumpDownAction])
-            // make player run sequence
-            madden.run(jumpSequence)
-        }
         if(contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask){
             num1 = contact.bodyA
             num2 = contact.bodyB
@@ -156,13 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func end(){
         self.removeAllActions()
     }
-/*
-    func changeScene(){
-        let transition:SKTransition = SKTransition.fade(withDuration: 1)
-        let sceneMoveTo = GameOverScene(size: self.size)
-        self.view?.presentScene(sceneMoveTo, transition: transition)
-    }
-*/
+
     func spawnEnemy(){
         
     }
