@@ -10,10 +10,10 @@ import SpriteKit
 import GameplayKit
 
 var score = 0
-var numEnemies = 8
+var numEnemies = 10
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    let madden = SKSpriteNode(imageNamed: "Madden_Glasses_1")
+    let madden = SKSpriteNode(imageNamed: "iron_man")
     let scoreLabel = SKLabelNode()
     
     let gameArea: CGRect
@@ -58,13 +58,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.physicsWorld.contactDelegate = self
         
-        let background = SKSpriteNode(imageNamed: "cs")
+        let background = SKSpriteNode(imageNamed: "8bit")
         background.size = self.size
         background.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         background.zPosition = 0
         self.addChild(background)
         
-        madden.setScale(2)
+        madden.setScale(0.22)
         madden.position = CGPoint(x: self.size.width/2, y: self.size.height/5)
         madden.zPosition = 2
         madden.physicsBody = SKPhysicsBody(rectangleOf: madden.size)
@@ -121,9 +121,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func generateEnemies(){
         for _ in 1...numEnemies{
-            let i = SKSpriteNode(imageNamed: "Android_Studio_icon")
-            i.setScale(0.07)
-            i.position = CGPoint(x: self.size.width*random(), y: (self.size.height/2*random())+self.size.height/2)
+            let i = SKSpriteNode(imageNamed: "enemy")
+            i.setScale(0.28)
+            i.position = CGPoint(x: self.size.width*random(), y: (self.size.height/(3)*random())+self.size.height/(1.5))
             i.zPosition = 2
             i.physicsBody = SKPhysicsBody(rectangleOf: i.size)
             i.physicsBody!.affectedByGravity = false;
@@ -140,7 +140,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             self.addChild(i)
             
-            i.physicsBody!.applyImpulse((CGVector(dx: random()+5, dy: random()+5)))
+            i.physicsBody!.applyImpulse((CGVector(dx: 50*random(), dy: 50*random())))
         }
     }
     
@@ -170,7 +170,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             num2.node?.removeFromParent()
             end()
         } else if (num1.categoryBitMask == PhysicsCategories.Madden && num2.categoryBitMask == PhysicsCategories.Platform){
-            num1.applyImpulse(CGVector(dx: 0, dy: 100))
+            num1.applyImpulse(CGVector(dx: 0, dy: 50))
         } else if num2.node != nil{
             if(num1.categoryBitMask == PhysicsCategories.Blast && num2.categoryBitMask == PhysicsCategories.Enemy){
                 explode(spawnPosition: num2.node!.position)
@@ -188,7 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         e.setScale(0)
         self.addChild(e)
         
-        let scaleIn = SKAction.scale(to: 0.1, duration: 0.1)
+        let scaleIn = SKAction.scale(to: 0.15, duration: 0.1)
         let fade = SKAction.fadeOut(withDuration: 0.1)
         let delete = SKAction.removeFromParent()
         
@@ -229,15 +229,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else {
             // Allow collisions if the hero is falling
-            madden.physicsBody!.collisionBitMask &= ~PhysicsCategories.Wall
+            madden.physicsBody!.collisionBitMask &= (~PhysicsCategories.Wall & ~PhysicsCategories.Blast)
             madden.physicsBody!.collisionBitMask |= PhysicsCategories.Platform
         }
         return;
     }
     
     func fire(location: CGPoint){
-        let blast = SKSpriteNode(imageNamed: "apple")
-        blast.setScale(0.023)
+        let blast = SKSpriteNode(imageNamed: "bomb")
+        blast.setScale(0.07)
         blast.position = madden.position
         blast.zPosition = 1
         blast.physicsBody = SKPhysicsBody(rectangleOf: blast.size)

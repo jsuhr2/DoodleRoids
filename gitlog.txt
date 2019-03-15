@@ -1,0 +1,145 @@
+commit 0105f3c77974142b2006e41a41ee44a2df9552b6
+Author: Jasper Suhr <jsuhr2@bl-n22.pods.bu.int>
+Date:   Fri Mar 15 01:25:22 2019 -0400
+
+    finished coding
+
+ .../UserInterfaceState.xcuserstate                  | Bin 16949 -> 16903 bytes
+ .../xcdebugger/Breakpoints_v2.xcbkptlist            |  12 ++++++------
+ CS441Project4/CS441Project4/GameScene.swift         |  16 ++++++++--------
+ 3 files changed, 14 insertions(+), 14 deletions(-)
+
+commit 90e326225fbe5a6697492079304428bec6e670b9
+Author: Jasper Suhr <jsuhr2@bl-n22.pods.bu.int>
+Date:   Fri Mar 15 01:09:18 2019 -0400
+
+    need to fix sprite not being able to fall through bottom of the screen
+
+ .DS_Store                                          | Bin 6148 -> 6148 bytes
+ .../CS441Project4.xcodeproj/project.pbxproj        |   4 +
+ .../UserInterfaceState.xcuserstate                 | Bin 16846 -> 16949 bytes
+ .../xcdebugger/Breakpoints_v2.xcbkptlist           |  34 +++++
+ .../platform2.imageset/Contents.json               |  21 +++
+ .../platform2.imageset/platform2.png               | Bin 0 -> 414 bytes
+ CS441Project4/CS441Project4/GameOverScene.swift    |  19 +--
+ CS441Project4/CS441Project4/GameScene.swift        | 148 ++++++++++++++-------
+ CS441Project4/GameWinScene.swift                   |  52 ++++++++
+ 9 files changed, 209 insertions(+), 69 deletions(-)
+
+commit f129bf9863710251fcbb1fa3dd39744dd8e489b0
+Author: Jasper Suhr <jsuhr2@bl-n20.pods.bu.int>
+Date:   Thu Mar 14 15:05:44 2019 -0400
+
+    continued working, need to fix platforms
+
+ .DS_Store                                          | Bin 6148 -> 6148 bytes
+ .../UserInterfaceState.xcuserstate                 | Bin 16714 -> 16846 bytes
+ .../xcdebugger/Breakpoints_v2.xcbkptlist           |  50 -----------------
+ .../platform.imageset/Contents.json                |  21 +++++++
+ .../Assets.xcassets/platform.imageset/platform.png | Bin 0 -> 120 bytes
+ CS441Project4/CS441Project4/GameScene.swift        |  62 ++++++++++++++-------
+ 6 files changed, 64 insertions(+), 69 deletions(-)
+
+commit 84ea07fbfdd8ee15c765de954cba83ad43cfdd68
+Author: Jasper Suhr <jsuhr2@slic-39.pods.bu.int>
+Date:   Wed Mar 13 19:51:55 2019 -0400
+
+    need to fix jumping mechanic
+
+ .DS_Store                                          | Bin 0 -> 6148 bytes
+ .../CS441Project4.xcodeproj/project.pbxproj        |   7 ++
+ .../UserInterfaceState.xcuserstate                 | Bin 16517 -> 16714 bytes
+ .../xcdebugger/Breakpoints_v2.xcbkptlist           |  55 +++++++++++++++
+ CS441Project4/CS441Project4/GameOverScene.swift    |  78 +++++++++++++++++++++
+ CS441Project4/CS441Project4/GameScene.swift        |  18 +++--
+ .../CS441Project4/GameViewController.swift         |   8 +++
+ 7 files changed, 161 insertions(+), 5 deletions(-)
+
+commit 922f2e5a8aad53d9fd3e4fd360cb6ce96cb2d308
+Author: Jasper Suhr <jsuhr2@bl-n27.pods.bu.int>
+Date:   Tue Mar 12 23:17:56 2019 -0400
+
+    made score in terms of enemies destroyed instead of height
+
+ .../UserInterfaceState.xcuserstate                 | Bin 16129 -> 16517 bytes
+ CS441Project4/CS441Project4/GameScene.swift        |  27 +++++++++++----------
+ 2 files changed, 14 insertions(+), 13 deletions(-)
+
+commit 2efeef2aec32c973ec8395f70176b725e4dd2c65
+Author: Jasper Suhr <jsuhr2@bl-n29.pods.bu.int>
+Date:   Sun Mar 10 21:09:35 2019 -0400
+
+    continued working on game, firing should be working (didn't get to test), need to work on enemy creation and platform stuff
+
+ .../UserInterfaceState.xcuserstate                 | Bin 16367 -> 16129 bytes
+ .../Android_Studio_icon.png                        | Bin 0 -> 60504 bytes
+ .../Android_Studio_icon.imageset/Contents.json     |  21 +++++++++++++++++++++
+ .../Madden_Glasses_1.imageset/Contents.json        |  21 +++++++++++++++++++++
+ .../Madden_Glasses_1.imageset/Madden_Glasses_1.png | Bin 0 -> 426 bytes
+ .../Assets.xcassets/apple.imageset/Contents.json   |  21 +++++++++++++++++++++
+ .../Assets.xcassets/apple.imageset/apple.png       | Bin 0 -> 242638 bytes
+ .../explosion.imageset/Contents.json               |  21 +++++++++++++++++++++
+ .../explosion.imageset/explosion.png               | Bin 0 -> 279489 bytes
+ CS441Project4/CS441Project4/GameScene.swift        |   3 +++
+ 10 files changed, 87 insertions(+)
+
+commit 882d570c027ecb4908ed909b0b41dbe2567e16f2
+Author: Jasper Suhr <jsuhr2@bl-n02.pods.bu.int>
+Date:   Sat Mar 9 16:24:22 2019 -0500
+
+    worked on project, added new background
+
+ .../UserInterfaceState.xcuserstate                 | Bin 15655 -> 16367 bytes
+ .../CS441Project4/Assets.xcassets/Contents.json    |   6 +++++
+ .../Assets.xcassets/cs.imageset/Contents.json      |  21 +++++++++++++++
+ .../Assets.xcassets/cs.imageset/cs.jpg             | Bin 0 -> 47985 bytes
+ CS441Project4/CS441Project4/GameScene.swift        |  29 ++++++++++-----------
+ 5 files changed, 41 insertions(+), 15 deletions(-)
+
+commit fd5cfdac7dbc14313e694268c375f796ae6a6a65
+Author: Jasper Suhr <jsuhr2@bl-n19.pods.bu.int>
+Date:   Fri Mar 8 16:26:10 2019 -0500
+
+    imported old code to use in new project
+
+ .../UserInterfaceState.xcuserstate                 | Bin 9818 -> 15655 bytes
+ .../AppIcon.appiconset/Contents.json               |  25 +++
+ CS441Project4/CS441Project4/GameScene.swift        | 184 ++++++++++++++++++++-
+ 3 files changed, 208 insertions(+), 1 deletion(-)
+
+commit ee1dd4762120461999fab0d461da9feac5e620b4
+Author: Jasper Suhr <jsuhr2@bl-n25.pods.bu.int>
+Date:   Mon Mar 4 15:33:10 2019 -0500
+
+    initial commit
+
+ .../CS441Project4.xcodeproj/project.pbxproj        | 536 +++++++++++++++++++++
+ .../project.xcworkspace/contents.xcworkspacedata   |   7 +
+ .../UserInterfaceState.xcuserstate                 | Bin 0 -> 9818 bytes
+ .../xcschemes/CS441Project4.xcscheme               | 111 +++++
+ .../xcschemes/xcschememanagement.plist             |  32 ++
+ CS441Project4/CS441Project4/Actions.sks            | Bin 0 -> 1892 bytes
+ CS441Project4/CS441Project4/AppDelegate.swift      |  46 ++
+ .../AppIcon.appiconset/Contents.json               |  68 +++
+ .../Spaceship.imageset/Contents.json               |  21 +
+ .../Spaceship.imageset/Spaceship.png               | Bin 0 -> 134723 bytes
+ .../Base.lproj/LaunchScreen.storyboard             |  27 ++
+ .../CS441Project4/Base.lproj/Main.storyboard       |  26 +
+ CS441Project4/CS441Project4/GameScene.sks          | Bin 0 -> 4694 bytes
+ CS441Project4/CS441Project4/GameScene.swift        |  15 +
+ .../CS441Project4/GameViewController.swift         |  55 +++
+ CS441Project4/CS441Project4/Info.plist             |  47 ++
+ .../CS441Project4Tests/CS441Project4Tests.swift    |  36 ++
+ CS441Project4/CS441Project4Tests/Info.plist        |  22 +
+ .../CS441Project4UITests.swift                     |  36 ++
+ CS441Project4/CS441Project4UITests/Info.plist      |  22 +
+ 20 files changed, 1107 insertions(+)
+
+commit ec6f6f033a2549686480865ef35f00691dfc7117
+Author: jsuhr2 <jsuhr2@binghamton.edu>
+Date:   Mon Mar 4 15:29:52 2019 -0500
+
+    Initial commit
+
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)

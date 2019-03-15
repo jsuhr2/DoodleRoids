@@ -13,7 +13,7 @@ import GameplayKit
 class GameOverScene: SKScene{
     let restart = SKLabelNode()
     override func didMove(to view: SKView) {
-        let background = SKSpriteNode(imageNamed: "cs")
+        let background = SKSpriteNode(imageNamed: "8bit")
         background.size = self.size
         background.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         background.zPosition = 0
@@ -29,7 +29,8 @@ class GameOverScene: SKScene{
         self.addChild(gameOverLabel)
         
         let scoreLabel = SKLabelNode()
-        scoreLabel.text = "Score: \(score)"
+        let numRemain = numEnemies - score
+        scoreLabel.text = "Enemies Remaining: \(numRemain)"
         scoreLabel.fontSize = 40
         scoreLabel.fontColor = SKColor.white
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
