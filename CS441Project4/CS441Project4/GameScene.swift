@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 
 var score = 0
+var numEnemies = 8
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     let madden = SKSpriteNode(imageNamed: "Madden_Glasses_1")
@@ -29,7 +30,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let Madden : UInt32 = 0b1 //1
         static let Blast : UInt32 = 0b10 //2
         static let Enemy : UInt32 = 0b100 //3
-        static let Platform: UInt32 = 0b1000
+        static let Platform: UInt32 = 0b110
+        static let Wall: UInt32 = 0b111
     }
     
     func randomPoint(scene: CGRect) -> CGPoint {
@@ -44,19 +46,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let margin = (size.width - playableWidth)/2
         gameArea = CGRect(x: margin, y: 0, width: playableWidth, height: size.height)
         super.init(size: size)
-        spawnBarRandom()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func spawnBarRandom(){
-
-    }
-    
-    func spawnBarTop(){
-        
     }
     
     override func didMove(to view: SKView) {
@@ -75,10 +68,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         madden.position = CGPoint(x: self.size.width/2, y: self.size.height/5)
         madden.zPosition = 2
         madden.physicsBody = SKPhysicsBody(rectangleOf: madden.size)
+        madden.physicsBody!.affectedByGravity = true;
+        madden.physicsBody!.allowsRotation = false;
         madden.physicsBody!.categoryBitMask = PhysicsCategories.Madden
-        madden.physicsBody!.collisionBitMask = PhysicsCategories.None
-        madden.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy
-        madden.physicsBody!.contactTestBitMask = PhysicsCategories.Platform
+        madden.physicsBody!.collisionBitMask &= ~PhysicsCategories.Wall
+        madden.physicsBody!.collisionBitMask &= ~PhysicsCategories.Blast
+        madden.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy | PhysicsCategories.Platform
         self.addChild(madden)
         
         scoreLabel.text = "Score: \(score)"
@@ -89,43 +84,70 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.zPosition = 3
         self.addChild(scoreLabel)
         
-        let plat = SKSpriteNode(imageNamed: "platform")
-        plat.setScale(2)
-        madden.position = CGPoint(x: self.size.width/2, y: 0)
+        let plat = SKSpriteNode(imageNamed: "platform2")
+        plat.setScale(0.2)
+        plat.position = CGPoint(x: self.size.width/2, y: 40)
         plat.zPosition = 1
         plat.physicsBody = SKPhysicsBody(rectangleOf: plat.size)
+            //CGSize(width: plat.size.width, height: plat.size.height), center: plat.position)
+        plat.physicsBody!.affectedByGravity = false;
         plat.physicsBody!.categoryBitMask = PhysicsCategories.Platform
         plat.physicsBody!.collisionBitMask = PhysicsCategories.None
         plat.physicsBody!.contactTestBitMask = PhysicsCategories.Madden
         self.addChild(plat)
         
-        start()
-        /*
-        while(true){
-            if(madden.position.y == 0 + madden.size.height/2){
-                // move up 20
-                let jumpUpAction = SKAction.moveBy(x: 0, y:20, duration:0.2)
-                // move down 20
-                let jumpDownAction = SKAction.moveBy(x: 0, y:-20, duration:0.2)
-                // sequence of move yup then down
-                let jumpSequence = SKAction.sequence([jumpUpAction, jumpDownAction])
-                // make player run sequence
-                madden.run(jumpSequence)
-            }
+        let borderBody = SKPhysicsBody(edgeLoopFrom: frame)
+        borderBody.friction = 0
+        borderBody.categoryBitMask = PhysicsCategories.Wall
+        physicsBody = borderBody
+        
+        generatePlatforms()
+        generateEnemies()
+    }
+    
+    func generatePlatforms(){
+        for _ in 1...6{
+            let i = SKSpriteNode(imageNamed: "platform2")
+            i.setScale(0.2)
+            i.position = CGPoint(x: self.size.width*random(), y: self.size.width*random())
+            i.zPosition = 1
+            i.physicsBody = SKPhysicsBody(rectangleOf: i.size)
+            //CGSize(width: plat.size.width, height: plat.size.height), center: plat.position)
+            i.physicsBody!.affectedByGravity = false;
+            i.physicsBody!.categoryBitMask = PhysicsCategories.Platform
+            i.physicsBody!.collisionBitMask = PhysicsCategories.None
+            i.physicsBody!.contactTestBitMask = PhysicsCategories.Madden
+            self.addChild(i)
         }
-        */
+    }
+    
+    func generateEnemies(){
+        for _ in 1...numEnemies{
+            let i = SKSpriteNode(imageNamed: "Android_Studio_icon")
+            i.setScale(0.07)
+            i.position = CGPoint(x: self.size.width*random(), y: (self.size.height/2*random())+self.size.height/2)
+            i.zPosition = 2
+            i.physicsBody = SKPhysicsBody(rectangleOf: i.size)
+            i.physicsBody!.affectedByGravity = false;
+            i.physicsBody!.categoryBitMask = PhysicsCategories.Enemy
+            i.physicsBody!.contactTestBitMask = PhysicsCategories.Madden
+            
+            i.physicsBody?.restitution = 1
+            i.physicsBody?.friction = 0
+            i.physicsBody?.collisionBitMask = PhysicsCategories.Wall
+            i.physicsBody?.affectedByGravity = false
+            i.physicsBody?.angularDamping = 0
+            i.physicsBody?.linearDamping = 0
+            
+            self.addChild(i)
+            
+            i.physicsBody!.applyImpulse((CGVector(dx: random()+5, dy: random()+5)))
+        }
     }
     
     func increaseScore(){
         score += 1
         scoreLabel.text = "Score: \(score)"
-    }
-    
-    func goToGameScene(){
-        let gameScene:GameScene = GameScene(size: self.view!.bounds.size) // create your new scene
-        let transition = SKTransition.fade(withDuration: 1.0) // create type of transition (you can check in documentation for more transtions)
-        gameScene.scaleMode = SKSceneScaleMode.fill
-        self.view!.presentScene(gameScene, transition: transition)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -148,8 +170,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             num1.node?.removeFromParent()
             num2.node?.removeFromParent()
             end()
+        } else if (num1.categoryBitMask == PhysicsCategories.Madden && num2.categoryBitMask == PhysicsCategories.Platform){
+            num1.applyImpulse(CGVector(dx: 0, dy: 65))
         } else if num2.node != nil{
-            if(num1.categoryBitMask == PhysicsCategories.Blast && num2.categoryBitMask == PhysicsCategories.Enemy && (num2.node?.position.y)! < self.size.height){
+            if(num1.categoryBitMask == PhysicsCategories.Blast && num2.categoryBitMask == PhysicsCategories.Enemy){
                 explode(spawnPosition: num2.node!.position)
                 num1.node?.removeFromParent()
                 num2.node?.removeFromParent()
@@ -173,25 +197,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         e.run(explosionSequence)
     }
     
-    func start(){
-        /*
-        let spawn = SKAction.run(spawnEnemy)
-        let wait = SKAction.wait(forDuration: 1)
-        let spawnSequence = SKAction.sequence([wait, spawn])
-        let spawnContinuous = SKAction.repeatForever(spawnSequence)
-        self.run(spawnContinuous)
-        */
+    func changeOverScene(){
+        let transition:SKTransition = SKTransition.fade(withDuration: 1)
+        let sceneMoveTo = GameOverScene(size: self.size)
+        self.view?.presentScene(sceneMoveTo, transition: transition)
+    }
+    
+    func changeWinScene(){
+        let transition:SKTransition = SKTransition.fade(withDuration: 1)
+        let sceneMoveTo = GameWinScene(size: self.size)
+        self.view?.presentScene(sceneMoveTo, transition: transition)
     }
     
     func end(){
         self.removeAllActions()
-    }
-
-    func spawnEnemy(){
-        
+        changeOverScene()
     }
     
-    func fire(){
+    override func didSimulatePhysics() {
+        if madden.position.y < 0 {
+            end()
+        }
+        if(score == numEnemies){
+            changeWinScene()
+        }
+        
+        let dy = madden.physicsBody!.velocity.dy
+        let z = CGFloat(0)
+        if dy > z {
+            // Prevent collisions if the hero is jumping
+            madden.physicsBody!.collisionBitMask &= ~PhysicsCategories.Platform
+        }
+        else {
+            // Allow collisions if the hero is falling
+            madden.physicsBody!.collisionBitMask |= PhysicsCategories.Platform
+        }
+        return;
+    }
+    
+    func fire(location: CGPoint){
         let blast = SKSpriteNode(imageNamed: "apple")
         blast.setScale(0.023)
         blast.position = madden.position
@@ -203,14 +247,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         blast.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy
         self.addChild(blast)
         
-        let moveBlast = SKAction.moveTo(y: self.size.height+blast.size.height, duration: 1)
+        let moveBlast = SKAction.move(to: location, duration: 0.5)
         let deleteBlast = SKAction.removeFromParent()
         let blastSequence = SKAction.sequence([moveBlast, deleteBlast])
         blast.run(blastSequence)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        fire()
+        let touch = touches.first!
+        let location = touch.location(in: self)
+        fire(location: location)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

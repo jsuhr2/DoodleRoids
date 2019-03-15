@@ -16,6 +16,7 @@
 		B168B830222DC2C40057B8C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B168B82E222DC2C40057B8C1 /* LaunchScreen.storyboard */; };
 		B168B83B222DC2C40057B8C1 /* CS441Project4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B168B83A222DC2C40057B8C1 /* CS441Project4Tests.swift */; };
 		B168B846222DC2C40057B8C1 /* CS441Project4UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B168B845222DC2C40057B8C1 /* CS441Project4UITests.swift */; };
+		B173FF21223B5AD5003354A6 /* GameWinScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B173FF20223B5AD5003354A6 /* GameWinScene.swift */; };
 		B178E9BE2239C7F400310DB6 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B178E9BD2239C7F400310DB6 /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		B168B841222DC2C40057B8C1 /* CS441Project4UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CS441Project4UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B168B845222DC2C40057B8C1 /* CS441Project4UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CS441Project4UITests.swift; sourceTree = "<group>"; };
 		B168B847222DC2C40057B8C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B173FF20223B5AD5003354A6 /* GameWinScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameWinScene.swift; path = ../GameWinScene.swift; sourceTree = "<group>"; };
 		B178E9BD2239C7F400310DB6 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,6 +114,7 @@
 				B168B82E222DC2C40057B8C1 /* LaunchScreen.storyboard */,
 				B168B831222DC2C40057B8C1 /* Info.plist */,
 				B178E9BD2239C7F400310DB6 /* GameOverScene.swift */,
+				B173FF20223B5AD5003354A6 /* GameWinScene.swift */,
 			);
 			path = CS441Project4;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				B168B828222DC2C40057B8C1 /* GameViewController.swift in Sources */,
 				B178E9BE2239C7F400310DB6 /* GameOverScene.swift in Sources */,
 				B168B820222DC2C40057B8C1 /* AppDelegate.swift in Sources */,
+				B173FF21223B5AD5003354A6 /* GameWinScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

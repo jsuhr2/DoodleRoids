@@ -1,8 +1,8 @@
 //
-//  GameOverScene.swift
+//  GameWinScene.swift
 //  CS441Project4
 //
-//  Created by Jasper Suhr on 3/13/19.
+//  Created by Jasper Suhr on 3/15/19.
 //  Copyright © 2019 Jasper Suhr. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-class GameOverScene: SKScene{
+class GameWinScene: SKScene{
     let restart = SKLabelNode()
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "cs")
@@ -20,22 +20,13 @@ class GameOverScene: SKScene{
         self.addChild(background)
         
         let gameOverLabel = SKLabelNode()
-        gameOverLabel.text = "Game Over"
+        gameOverLabel.text = "You Win!"
         gameOverLabel.fontSize = 50
         gameOverLabel.fontColor = SKColor.white
         gameOverLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         gameOverLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.7)
         gameOverLabel.zPosition = 1
         self.addChild(gameOverLabel)
-        
-        let scoreLabel = SKLabelNode()
-        scoreLabel.text = "Score: \(score)"
-        scoreLabel.fontSize = 40
-        scoreLabel.fontColor = SKColor.white
-        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
-        scoreLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.5)
-        scoreLabel.zPosition = 1
-        self.addChild(scoreLabel)
         
         restart.text = "Restart"
         restart.fontSize = 40
