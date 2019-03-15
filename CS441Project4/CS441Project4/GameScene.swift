@@ -26,12 +26,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     struct PhysicsCategories{
+        static let Wall: UInt32 = 0b1
         static let None : UInt32 = 0
-        static let Madden : UInt32 = 0b1 //1
-        static let Blast : UInt32 = 0b10 //2
-        static let Enemy : UInt32 = 0b100 //3
-        static let Platform: UInt32 = 0b110
-        static let Wall: UInt32 = 0b111
+        static let Madden : UInt32 = 0b10 //1
+        static let Blast : UInt32 = 0b100 //2
+        static let Enemy : UInt32 = 0b1000 //3
+        static let Platform: UInt32 = 0b10000
     }
     
     func randomPoint(scene: CGRect) -> CGPoint {
@@ -71,8 +71,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         madden.physicsBody!.affectedByGravity = true;
         madden.physicsBody!.allowsRotation = false;
         madden.physicsBody!.categoryBitMask = PhysicsCategories.Madden
-        madden.physicsBody!.collisionBitMask &= ~PhysicsCategories.Wall
-        madden.physicsBody!.collisionBitMask &= ~PhysicsCategories.Blast
         madden.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy | PhysicsCategories.Platform
         self.addChild(madden)
         
@@ -135,6 +133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             i.physicsBody?.restitution = 1
             i.physicsBody?.friction = 0
             i.physicsBody?.collisionBitMask = PhysicsCategories.Wall
+            i.physicsBody?.collisionBitMask |= PhysicsCategories.Platform
             i.physicsBody?.affectedByGravity = false
             i.physicsBody?.angularDamping = 0
             i.physicsBody?.linearDamping = 0
@@ -171,7 +170,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             num2.node?.removeFromParent()
             end()
         } else if (num1.categoryBitMask == PhysicsCategories.Madden && num2.categoryBitMask == PhysicsCategories.Platform){
-            num1.applyImpulse(CGVector(dx: 0, dy: 65))
+            num1.applyImpulse(CGVector(dx: 0, dy: 100))
         } else if num2.node != nil{
             if(num1.categoryBitMask == PhysicsCategories.Blast && num2.categoryBitMask == PhysicsCategories.Enemy){
                 explode(spawnPosition: num2.node!.position)
@@ -230,6 +229,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else {
             // Allow collisions if the hero is falling
+            madden.physicsBody!.collisionBitMask &= ~PhysicsCategories.Wall
             madden.physicsBody!.collisionBitMask |= PhysicsCategories.Platform
         }
         return;
